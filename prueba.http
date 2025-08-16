@@ -22,5 +22,35 @@ Content-Type: application/json
 
 ### 🔒 Endpoint protegido de prueba (ejemplo)
 GET http://localhost:8000/api/capsules/
-Authorization: Token {{token}}
+Authorization: Token 0a822e4b41324053faab8f2aa186c4b566cd211c
 Accept: application/json
+
+### Listar cápsulas públicas
+GET http://localhost:8000/api/capsules/
+Accept: application/json
+
+###
+
+### Crear cápsula (requiere token)
+POST http://localhost:8000/api/capsules/
+Content-Type: application/json
+Authorization: Token 0a822e4b41324053faab8f2aa186c4b566cd211c
+
+{
+  "title": "Mi cápsula del futuro",
+  "message": "Hola yo del futuro 👋",
+  "release_date": "2025-12-31T23:59:59Z",
+  "is_public": true
+}
+
+###
+
+### Ver detalles de una cápsula
+GET http://localhost:8000/api/capsules/1/
+Accept: application/json
+
+###
+
+### Eliminar cápsula (solo autor)
+DELETE http://localhost:8000/api/capsules/1/
+Authorization: Token {{token}}
