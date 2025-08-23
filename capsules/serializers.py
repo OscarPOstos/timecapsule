@@ -1,15 +1,23 @@
 from rest_framework import serializers
-from .models import Capsule
+from .models import Capsule, CapsuleSubscription
 
 class CapsuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Capsule
-        fields = ["id", "title", "message", "release_date", "is_public", "author", "created_at"]
-        read_only_fields = ["id", "author", "created_at"]
+        fields = ["id", "title", "release_date", "is_public", "created_by", "created_at"]
+        read_only_fields = ["created_by", "created_at"]
 
-    def to_representation(self, instance):
-        """Ocultar mensaje si la cápsula aún no está disponible"""
-        rep = super().to_representation(instance)
-        if not instance.is_available():
-            rep["message"] = "⏳ Esta cápsula aún no está disponible."
-        return rep
+
+class CapsuleDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Capsule
+        fields = ["id", "title", "message", "release_date", "is_public", "created_by", "created_at"]
+        read_only_fields = ["created_by", "created_at"]
+
+
+class CapsuleSubscriptionSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField()
+
+    class Meta:
+        model = CapsuleSubscription
+        fields = ["id", "user", "subscribed_at"]

@@ -39,7 +39,7 @@ Authorization: Token 0a822e4b41324053faab8f2aa186c4b566cd211c
 {
   "title": "Mi cápsula del futuro",
   "message": "Hola yo del futuro 👋",
-  "release_date": "2025-12-31T23:59:59Z",
+  "release_date": "2024-12-31T23:59:59Z",
   "is_public": true
 }
 
@@ -53,4 +53,20 @@ Accept: application/json
 
 ### Eliminar cápsula (solo autor)
 DELETE http://localhost:8000/api/capsules/1/
-Authorization: Token {{token}}
+Authorization: Token 0a822e4b41324053faab8f2aa186c4b566cd211c
+
+### 📬 Abrir cápsula (si ya está disponible)
+GET http://localhost:8000/api/capsules/2/open/
+Authorization: Token 0a822e4b41324053faab8f2aa186c4b566cd211c
+
+###
+
+### ➕ Suscribirse a cápsula
+POST http://localhost:8000/api/capsules/1/subscribe/
+Authorization: Token 0a822e4b41324053faab8f2aa186c4b566cd211c
+
+###
+
+### 👥 Ver suscriptores de una cápsula
+GET http://localhost:8000/api/capsules/1/subscribers/
+Authorization: Token 0a822e4b41324053faab8f2aa186c4b566cd211c
