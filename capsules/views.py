@@ -5,6 +5,8 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from .serializers import CapsuleSerializer, CapsuleDetailSerializer, CapsuleSubscriptionSerializer
+from django.utils.timezone import now
+from django.db.models import Count
 
 class CapsuleListCreateView(generics.ListCreateAPIView):
     queryset = Capsule.objects.filter(is_public=True)
@@ -58,4 +60,22 @@ class CapsuleSubscribersView(APIView):
         capsule = get_object_or_404(Capsule, id=id)
         subscribers = capsule.subscriptions.all()
         serializer = CapsuleSubscriptionSerializer(subscribers, many=True)
+        return Response(serializer.data)
+
+# 📈 Publicaciones activas del día
+class ActiveCapsulesStatsView(APIView):
+    def get(self, request):
+        today = now().date()
+        active_capsules = Capsule.objects.filter(created_at__date=today).count()
+        return Response({"date": str(today), "active_capsules": active_capsules})
+
+
+# 📈 Pensamientos más populares
+class TopCapsulesStatsView(APIView):
+    def get(self, request):
+        top_capsules = (
+            Capsule.objects.annotate(num_subs=Count("subscriptions"))
+            .order_by("-num_subs")[:5]
+        )
+        serializer = CapsuleSerializer(top_capsules, many=True)
         return Response(serializer.data)

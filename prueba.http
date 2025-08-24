@@ -70,3 +70,12 @@ Authorization: Token 0a822e4b41324053faab8f2aa186c4b566cd211c
 ### 👥 Ver suscriptores de una cápsula
 GET http://localhost:8000/api/capsules/1/subscribers/
 Authorization: Token 0a822e4b41324053faab8f2aa186c4b566cd211c
+
+### 📈 Publicaciones activas del día
+GET http://localhost:8000/api/stats/active/
+Authorization: Token 0a822e4b41324053faab8f2aa186c4b566cd211c
+
+
+### 📈 Top cápsulas más populares
+GET http://localhost:8000/api/stats/top/
+Authorization: Token 0a822e4b41324053faab8f2aa186c4b566cd211c
